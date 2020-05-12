@@ -39,83 +39,84 @@ int[][] empty;
 boolean demoMode = false;
 boolean autoDown=false;
 void setup() {
-  size(640, 480, P2D);
-  bg = loadImage("img/bg.jpg");
-  title = loadImage("img/title.jpg");
-  gameover = loadImage("img/gameover.jpg");
-  startNormal = loadImage("img/startNormal.png");
-  startHovered = loadImage("img/startHovered.png");
-  restartNormal = loadImage("img/restartNormal.png");
-  restartHovered = loadImage("img/restartHovered.png");
-  groundhogIdle = loadImage("img/groundhogIdle.png");
-  groundhogLeft = loadImage("img/groundhogLeft.png");
-  groundhogRight = loadImage("img/groundhogRight.png");
-  groundhogDown = loadImage("img/groundhogDown.png");
-  life = loadImage("img/life.png");
-  soldier = loadImage("img/soldier.png");
-  cabbage = loadImage("img/cabbage.png");
-  soilEmpty = loadImage("img/soils/soilEmpty.png");
+	size(640, 480, P2D);
+	bg = loadImage("img/bg.jpg");
+	title = loadImage("img/title.jpg");
+	gameover = loadImage("img/gameover.jpg");
+	startNormal = loadImage("img/startNormal.png");
+	startHovered = loadImage("img/startHovered.png");
+	restartNormal = loadImage("img/restartNormal.png");
+	restartHovered = loadImage("img/restartHovered.png");
+	groundhogIdle = loadImage("img/groundhogIdle.png");
+	groundhogLeft = loadImage("img/groundhogLeft.png");
+	groundhogRight = loadImage("img/groundhogRight.png");
+	groundhogDown = loadImage("img/groundhogDown.png");
+	life = loadImage("img/life.png");
+	soldier = loadImage("img/soldier.png");
+	cabbage = loadImage("img/cabbage.png");
+	soilEmpty = loadImage("img/soils/soilEmpty.png");
 
-  // Load soil images used in assign3 if you don't plan to finish requirement #6
-  soil0 = loadImage("img/soil0.png");
-  soil1 = loadImage("img/soil1.png");
-  soil2 = loadImage("img/soil2.png");
-  soil3 = loadImage("img/soil3.png");
-  soil4 = loadImage("img/soil4.png");
-  soil5 = loadImage("img/soil5.png");
+	// Load soil images used in assign3 if you don't plan to finish requirement #6
+	soil0 = loadImage("img/soil0.png");
+	soil1 = loadImage("img/soil1.png");
+	soil2 = loadImage("img/soil2.png");
+	soil3 = loadImage("img/soil3.png");
+	soil4 = loadImage("img/soil4.png");
+	soil5 = loadImage("img/soil5.png");
 
-  // Load PImage[][] soils
-  soils = new PImage[6][5];
-  for(int i = 0; i < soils.length; i++){
-    for(int j = 0; j < soils[i].length; j++){
-      soils[i][j] = loadImage("img/soils/soil" + i + "/soil" + i + "_" + j + ".png");
-      }
-    }
+	// Load PImage[][] soils
+	soils = new PImage[6][5];
+	for(int i = 0; i < soils.length; i++){
+		for(int j = 0; j < soils[i].length; j++){
+			soils[i][j] = loadImage("img/soils/soil" + i + "/soil" + i + "_" + j + ".png");
+		}
+	}
 
-  // Load PImage[][] stones
-  stones = new PImage[2][5];
-  for(int i = 0; i < stones.length; i++){
-    for(int j = 0; j < stones[i].length; j++){
-      stones[i][j] = loadImage("img/stones/stone" + i + "/stone" + i + "_" + j + ".png");
-    }
-  }
+	// Load PImage[][] stones
+	stones = new PImage[2][5];
+	for(int i = 0; i < stones.length; i++){
+		for(int j = 0; j < stones[i].length; j++){
+			stones[i][j] = loadImage("img/stones/stone" + i + "/stone" + i + "_" + j + ".png");
+		}
+	}
 
-  // Initialize player
+	// Initialize player
   playerReset();
-  playerHealth = 2;
+	playerHealth = 2;
 
-  // Initialize soilHealth
+	// Initialize soilHealth
   soilHealth = new int[SOIL_COL_COUNT][SOIL_ROW_COUNT]; // [8][24]
-  soilHealthReset();
+	soilHealthReset();
         
-  // Initialize soidiers and their position
+	// Initialize soidiers and their position
   soldierX = new float[6];
   soldierY = new float[6];
   soidierReset();
 
-  // Initialize cabbages and their position
+	// Initialize cabbages and their position
   cabbageX = new float[6];  
   cabbageY = new float[6];  
   cabbageReset();
   
   
   //fill ONE or TWO value into empty array
-  empty = new int[23][2];
-  int rnd = 0; 
-  for(int i=0; i<empty.length; i++){  
-  rnd = floor(random(1,3)); // set the condition is ONE/TWO
-    if(rnd ==1){
-      empty[i][0] = floor(random(0,8)); // set where the empty location is
-      empty[i][1] = -1; // it stands for : there is no need to fill value.
-    }
-    if(rnd ==2){
-      empty[i][0] = floor(random(0,8)); // set where the empty location is
-      empty[i][1] = floor(random(0,8)); // set where the empty location is
-      while(empty[i][0]==empty[i][1]){
-        empty[i][1] = floor(random(0,8)); // when these two values are the same, then reset again : make sure that [0]!=[1]
+    empty = new int[23][2];
+    int rnd = 0; 
+    for(int i=0; i<empty.length; i++){  
+      rnd = floor(random(1,3)); // set the condition is ONE/TWO
+      if(rnd ==1){
+          empty[i][0] = floor(random(0,8)); // set where the empty location is
+          empty[i][1] = -1; // it stands for : there is no need to fill value.
       }
-    }
-  } 
+      if(rnd ==2){
+          empty[i][0] = floor(random(0,8)); // set where the empty location is
+          empty[i][1] = floor(random(0,8)); // set where the empty location is
+          while(empty[i][0]==empty[i][1]){
+            empty[i][1] = floor(random(0,8)); // when these two values are the same, then reset again : make sure that [0]!=[1]
+          }
+      }
+    } 
+  
 }
 
 void draw() {
